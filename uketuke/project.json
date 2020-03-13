@@ -505,9 +505,9 @@
                         "id": "7a81e0b6-6876-1aff-6cd9-84ed3c843b8e",
                         "type": "REST",
                         "x": 79.41847090500985,
-                        "y": 303.6515432586134,
+                        "y": 304.6515432586134,
                         "parameters": {
-                            "code": "define({\n  inputs:{\n      apikey:'string'\n  },\n  outputs:{\n      items:'collection'\n  },\n  request:function(inputs,request) {\n      request.headers = {\"X-API-KEY\":inputs.apikey};\n\n  },\n  response:function(outputs,response) {\n      console.log(response);\n      outputs.items = response.content.contents;\n  }\n  \n})\n",
+                            "code": "define({\n  inputs:{\n      apikey:'string'\n  },\n  outputs:{\n      items:'collection'\n  },\n  request:function(inputs,request) {\n      request.headers = {\"X-API-KEY\":inputs.apikey};\n  },\n  response:function(outputs,response) {\n      for (i = 0; i < response.content.contents.length; i++) {\n        response.content.contents[i].url=response.content.contents[i].icon.url\n      }\n      outputs.items = response.content.contents;\n  }\n})\n",
                             "resource": "/news",
                             "apiKey": "fab15d58-7f93-427e-9ec8-e2732faac1a7"
                         },
@@ -678,6 +678,12 @@
                         "fromProperty": "name",
                         "toId": "6f6602ff-e100-fcf0-dd9e-3ab280ed6088",
                         "toProperty": "text"
+                    },
+                    {
+                        "fromId": "5fa50415-c5d0-6e73-8f68-ea079c3a603f",
+                        "fromProperty": "url",
+                        "toId": "89bc3d7e-5a1c-8c7e-ce52-a9185fa470bf",
+                        "toProperty": "src"
                     }
                 ],
                 "roots": [
@@ -722,20 +728,33 @@
                                 "value": 3,
                                 "unit": "px"
                             },
-                            "borderRadius": 4
+                            "borderRadius": 4,
+                            "flexDirection": "row"
                         },
                         "ports": [],
                         "dynamicports": [],
                         "children": [
                             {
-                                "id": "6f6602ff-e100-fcf0-dd9e-3ab280ed6088",
-                                "type": "Text",
-                                "label": "name",
+                                "id": "89bc3d7e-5a1c-8c7e-ce52-a9185fa470bf",
+                                "type": "Image",
                                 "x": 20,
                                 "y": 46,
                                 "parameters": {
+                                    "sizeMode": "explicit",
+                                    "height": {
+                                        "value": 15,
+                                        "unit": "%"
+                                    },
+                                    "width": {
+                                        "value": 15,
+                                        "unit": "%"
+                                    },
                                     "marginLeft": {
-                                        "value": 0,
+                                        "value": 5,
+                                        "unit": "px"
+                                    },
+                                    "marginRight": {
+                                        "value": 5,
                                         "unit": "px"
                                     }
                                 },
@@ -744,44 +763,97 @@
                                 "children": []
                             },
                             {
-                                "id": "17be9735-b817-8301-f13b-1b79e0dc958e",
-                                "type": "Text",
-                                "label": "nickname",
+                                "id": "aa3d5a7e-dc7a-85a3-fd2e-f7c6a539cfec",
+                                "type": "Group",
                                 "x": 20,
-                                "y": 143,
+                                "y": 128,
                                 "parameters": {
-                                    "color": "#006394"
-                                },
-                                "ports": [],
-                                "dynamicports": [],
-                                "children": []
-                            },
-                            {
-                                "id": "65be7bc3-c004-4656-1e82-369246dca6ad",
-                                "type": "Text",
-                                "label": "content",
-                                "x": 20,
-                                "y": 240,
-                                "parameters": {
+                                    "paddingTop": 0,
+                                    "marginTop": {
+                                        "value": 5,
+                                        "unit": "px"
+                                    },
+                                    "marginRight": {
+                                        "value": 5,
+                                        "unit": "px"
+                                    },
+                                    "marginBottom": {
+                                        "value": 5,
+                                        "unit": "px"
+                                    },
                                     "marginLeft": {
-                                        "value": 10,
+                                        "value": 5,
+                                        "unit": "px"
+                                    },
+                                    "boxShadowOffsetX": {
+                                        "value": 3,
+                                        "unit": "px"
+                                    },
+                                    "boxShadowOffsetY": {
+                                        "value": 3,
                                         "unit": "px"
                                     }
                                 },
                                 "ports": [],
                                 "dynamicports": [],
-                                "children": []
+                                "children": [
+                                    {
+                                        "id": "6f6602ff-e100-fcf0-dd9e-3ab280ed6088",
+                                        "type": "Text",
+                                        "label": "name",
+                                        "x": 491.5394298660184,
+                                        "y": 437.96766018514313,
+                                        "parameters": {
+                                            "marginLeft": {
+                                                "value": 0,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "ports": [],
+                                        "dynamicports": [],
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "17be9735-b817-8301-f13b-1b79e0dc958e",
+                                        "type": "Text",
+                                        "label": "nickname",
+                                        "x": 491.5394298660184,
+                                        "y": 534.9676601851431,
+                                        "parameters": {
+                                            "color": "#006394"
+                                        },
+                                        "ports": [],
+                                        "dynamicports": [],
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "65be7bc3-c004-4656-1e82-369246dca6ad",
+                                        "type": "Text",
+                                        "label": "content",
+                                        "x": 491.5394298660184,
+                                        "y": 631.9676601851431,
+                                        "parameters": {
+                                            "marginLeft": {
+                                                "value": 10,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "ports": [],
+                                        "dynamicports": [],
+                                        "children": []
+                                    }
+                                ]
                             }
                         ]
                     },
                     {
                         "id": "5fa50415-c5d0-6e73-8f68-ea079c3a603f",
                         "type": "Model",
-                        "x": 209.34416914646187,
-                        "y": 367.6477699734826,
+                        "x": 210.40765489311235,
+                        "y": 368.71125572013307,
                         "parameters": {
                             "modelId": "list",
-                            "properties": "nickname,content,icon,name"
+                            "properties": "nickname,content,url,name"
                         },
                         "ports": [],
                         "dynamicports": [
@@ -812,7 +884,7 @@
                                 },
                                 "plug": "input/output",
                                 "group": "Properties",
-                                "name": "icon",
+                                "name": "url",
                                 "index": 8
                             },
                             {
